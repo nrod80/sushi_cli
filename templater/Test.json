@@ -1,0 +1,69 @@
+{
+    "DB": {
+        "def": {
+            "DBname": "newsushi",
+            "port": 5432,
+            "logging": "false",
+            "dialect": "postgres"
+        },
+        "Tables": [{
+            "name": "Users",
+            "fields": [{
+                "name": "name",
+                "type": "string"
+            }, {
+                "name": "age",
+                "type": "Integer"
+            }],
+            "Getters": [{
+                "name": "getAgeplusName"
+            }, {
+                "name": "AnotherGetter"
+                }],
+            "Setters": [{
+                "name": "setLowercase"
+            },{
+                "name": "anotherSetter"
+                }],
+            "Hooks": [{
+                "name": "convertToBinary"
+            }, {
+                "name": "anotherHook"
+                }]
+        }, {
+            "name": "Animals",
+            "fields": [{
+                "name": "name",
+                "type": "String"
+            }, {
+                "name": "legs",
+                "type": "Integer"
+            }]
+        }, {
+            "name": "Dinner",
+            "fields": [{
+                "name": "name",
+                "type": "String"
+            }, {
+                "name": "timetocomplete",
+                "type": "Integer"
+            }]
+        }],
+        "Associations": {
+            "Users": {
+                "Animals": "hasMany",
+                "Dinner": "hasOne"
+            },
+            "Animals": {
+                "Users": "belongsTo"
+            },
+            "Dinner": {
+                "Users": "belongsTo"
+            }
+        }
+    },
+    "github": {
+        "username": "nrod80",
+        "projectname": "sushi"
+    }
+}
