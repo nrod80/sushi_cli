@@ -11,6 +11,7 @@
 
 <strong>Getting started:</strong>
   Install the NPM package.
+  Use the phrase 'sushi cook', with any of the following options:
   
  <strong>Options:</strong>
  
