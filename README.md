@@ -14,20 +14,20 @@
   
  <strong>Options:</strong>
  
-  - <strong>-u, --url \<json_url\></strong>
+  - <strong>-u, --url \<json_url\></strong> <br />
     The -u flag allows you to add the URL to a JSON created through our webapp as the data for the template
   
-  - <strong>-j, --json \<json_path\></strong>
+  - <strong>-j, --json \<json_path\></strong> <br />
     The -j flag allows you to add the path to locally stored JSON object to use as the data for the template
   
-  - <strong>-t, --template \<template_path\></strong>
+  - <strong>-t, --template \<template_path\></strong> <br />
     The -t flag allows you to add the path to a locally stored template to use to output the proper files
   
-  - <strong>-d, --directory \<directory_path\></strong>
+  - <strong>-d, --directory \<directory_path\></strong> <br />
     The -d flag allows you to specify the output location of the directory created by the template
   
-  - <strong>-g, --git</strong>
+  - <strong>-g, --git</strong> <br />
     The -g flag will initialize a .git file in the directory
   
-  - <strong>--sen</strong>
+  - <strong>--sen</strong> <br />
     The --sen flag indicates that you want to use the included Sequelize, Express, Node template
