@@ -1,11 +1,11 @@
 #!/usr/bin/env node
 
 const program = require('commander');
-const exec = require('child_process').exec;
+const exec = require('child_process').execSync;
 const chalk = require('chalk');
 const http = require('http');
 const path = require('path');
-let template, data;
+let template, data, cwd;
 
 function templater(options) {
 
@@ -27,36 +27,34 @@ function templater(options) {
       // once data is received...
       res.on('data', function(chunk) {
         data = JSON.parse(chunk.toString()).json;
-        cookRecipe(template, data)
+        cookRecipe(template, data, options.git, options.directory)
       });
     });
   } else if (options.json) {
     data = require(path.join(process.env.PWD, options.json))
     console.log('B', template)
-    cookRecipe(template, data)
+    cookRecipe(template, data, options.git, options.directory)
   } else {
     console.log(chalk.red('You must provide a json.'))
   }
 };
 
-function cookRecipe(template, data) {
+function cookRecipe(template, data, git = false, projLocation = process.env.PWD) {
+  cwd = projLocation || path.join(process.env.PWD, data.DB.def.DBname);
+
   console.log(chalk.green('your sushi order has been received!'));
   console.log(chalk.blue('step 1: getting your ingredients...'));
-  // call senstack on the received json
-  template(data);
-  console.log(chalk.blue('step 2: chopping the veggies and cooking the rice... (npm install, created database)'));
-  exec('cd ' + data.DB.def.DBname + '; npm install', (error, stdout, stderr) => {
-    if (error) console.log(chalk.red(error));
-    if (stdout) console.log(chalk.yellow(stdout));
-    if (stderr) console.log(chalk.yellow(stderr));
-    console.log(chalk.blue('step 3: rolling the sushi... (starting server...)'));
-    console.log(chalk.green('step 4: enjoy! (server running on port 3000)'));
-    exec('cd ' + data.DB.def.DBname + '; npm start', (errornxt, stdoutnxt, stderrnxt) => {
-      if (error) console.log(chalk.red(errornxt));
-      if (stdout) console.log(chalk.yellow(stdoutnxt));
-      if (stderr) console.log(chalk.yellow(stderrnxt));
-    });
-  });
+  // call the template on the received json
+  template(data, projLocation);
+  console.log(chalk.blue('step 2: chopping the veggies and cooking the rice... (npm install, create database)'));
+  exec('npm install', {cwd: cwd})
+  if (git) {
+    console.log(chalk.blue('initializing git repo...'))
+    exec('git init', {cwd: cwd})
+  };
+  console.log(chalk.blue('step 3: rolling the sushi... (starting server...)'));
+  console.log(chalk.green('step 4: enjoy! (server running on port 3000)'));
+  exec('npm start', {cwd: cwd})
 }
 
 // defaults to json_url (optional req)
@@ -66,6 +64,8 @@ program
   .option('-u, --url <json_url>')
   .option('-j, --json <json_path>')
   .option('-t, --template <template_path>')
+  .option('-g, --git')
+  .option('-d, --directory <directory_path>')
   .option('--sen', 'use the senstack template')
   .description('cook the ingredients into a file system')
   .action(templater);

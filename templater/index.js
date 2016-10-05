@@ -2,5 +2,5 @@
 let senstack = require('./SENstack')
 
 module.exports = {
-  senstack: senstack(data)
+  senstack: senstack(data, projLocation)
 }
