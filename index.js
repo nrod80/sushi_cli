@@ -28,14 +28,10 @@ function templater(options) {
       // once data is received...
       res.on('data', function(chunk) {
         i++;
-        // console.log(i, 'CHUNK', chunk.toString())
         data += chunk.toString();
-        // console.log('DATA', data)
       })
       .on('end', function() {
-        // console.log('DATA', data)
         data = JSON.parse(data).definition;
-        // console.log('DATA', data)
         cookRecipe(template, data, options.git, options.directory)
       });
     });
