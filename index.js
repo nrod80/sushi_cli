@@ -3,36 +3,44 @@
 const program = require('commander');
 const exec = require('child_process').execSync;
 const chalk = require('chalk');
-const http = require('http');
+const https = require('https');
 const path = require('path');
-let template, data, cwd;
+let template, data = '', cwd;
 
 function templater(options) {
 
   // define template
   if (options.template) {
     template = require(path.join(process.env.PWD, options.template))
-  } else if (options.sen) {
+  } else if (options.sen) { // use default template
     template = require('./templater/SENstack');
   } else {
     return console.log(chalk.red('You must provide a template.'))
   }
+  let i = 0;
 
   // get the data
   if (options.url) {
     console.log(chalk.blue('placing your order...'));
     // get the json with an http request
-    console.log(options.url)
-    http.get(options.url, function(res) {
+    process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
+    https.get(options.url, function(res) {
       // once data is received...
       res.on('data', function(chunk) {
-        data = JSON.parse(chunk.toString()).json;
+        i++;
+        // console.log(i, 'CHUNK', chunk.toString())
+        data += chunk.toString();
+        // console.log('DATA', data)
+      })
+      .on('end', function() {
+        // console.log('DATA', data)
+        data = JSON.parse(data).definition;
+        // console.log('DATA', data)
         cookRecipe(template, data, options.git, options.directory)
       });
     });
-  } else if (options.json) {
+  } else if (options.json) { // path to local json
     data = require(path.join(process.env.PWD, options.json))
-    console.log('B', template)
     cookRecipe(template, data, options.git, options.directory)
   } else {
     console.log(chalk.red('You must provide a json.'))

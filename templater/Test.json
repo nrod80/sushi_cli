@@ -11,59 +11,37 @@
             "fields": [{
                 "name": "name",
                 "type": "string"
-            }, {
+            },
+            {
                 "name": "age",
-                "type": "Integer"
+                "type": "integer"
             }],
             "Getters": [{
-                "name": "getAgeplusName"
-            }, {
-                "name": "AnotherGetter"
+                "name": "aGetter"
                 }],
             "Setters": [{
-                "name": "setLowercase"
-            },{
-                "name": "anotherSetter"
+                "name": "aSetter"
                 }],
             "Hooks": [{
-                "name": "convertToBinary"
-            }, {
-                "name": "anotherHook"
+                "name": "aHook"
                 }]
         }, {
-            "name": "Animals",
+            "name": "Cats",
             "fields": [{
                 "name": "name",
                 "type": "String"
             }, {
-                "name": "legs",
-                "type": "Integer"
-            }]
-        }, {
-            "name": "Dinner",
-            "fields": [{
-                "name": "name",
-                "type": "String"
-            }, {
-                "name": "timetocomplete",
+                "name": "fluffyness",
                 "type": "Integer"
             }]
         }],
         "Associations": {
             "Users": {
-                "Animals": "hasMany",
-                "Dinner": "hasOne"
+                "Cats": "hasMany",
             },
-            "Animals": {
-                "Users": "belongsTo"
-            },
-            "Dinner": {
+            "Cats": {
                 "Users": "belongsTo"
             }
         }
-    },
-    "github": {
-        "username": "nrod80",
-        "projectname": "sushi"
     }
 }
