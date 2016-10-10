@@ -1,0 +1,64 @@
+{
+  "DB": {
+    "proj": {
+      "name": "testing",
+      "description": "This is a test description."
+    },
+    "def": {
+      "DBname": "testing",
+      "port": "5432",
+      "logging": "",
+      "dialect": "postgres"
+    },
+    "Tables": {
+      "0": {
+        "name": "Users",
+        "Routes": {
+          "get": false,
+          "post": false,
+          "getID": false,
+          "putID": true,
+          "deleteID": true
+        },
+        "Fields": [{
+          "name": "name",
+          "type": "string"
+        }, {
+          "name": "age",
+          "type": "integer"
+        }],
+        "Getters": [],
+        "Setters": [],
+        "Hooks": []
+      },
+      "1": {
+        "name": "Tests",
+        "Routes": {
+          "get": true,
+          "post": true,
+          "getID": true,
+          "putID": false,
+          "deleteID": false
+        },
+        "Fields": [{
+          "name": "name",
+          "type": "string"
+        }, {
+          "name": "difficulty",
+          "type": "integer"
+        }],
+        "Getters": [],
+        "Setters": [],
+        "Hooks": []
+      }
+    },
+    "Associations": {
+      "Users": {
+        "Tests": "hasMany"
+      },
+      "Tests": {
+        "Users": "belongsTo"
+      }
+    }
+  }
+}

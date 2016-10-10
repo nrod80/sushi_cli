@@ -2,9 +2,9 @@
 
 let Sequelize = require('sequelize')
 
-let db = new Sequelize('{{dialect}}://localhost:{{port}}/{{DBname}}',
+let db = new Sequelize('{{dialect}}://localhost:{{port}}/{{DBname}}'
   {%if logging %}
-    { LOGGING: {{ logging }} }
+    , { LOGGING: {{ logging }} }
   {% endif %}
   );
 

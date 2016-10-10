@@ -1,6 +1,6 @@
 # sushi_cli
 
-<strong>Welcome to Sushi's CLI!</strong>
+<h2><strong>Welcome to SushiRoll's CLI!</strong></h2>
 
 <strong>This interface will allow you to use templates to create functional code from our agnostic JSONs. You can:</strong>
 - write your own templates (or use ours),
@@ -45,3 +45,8 @@ Once installed, you can use the phrase 'sushi cook', with any of the following o
   - I want to create the file right in my working directory in the terminal.<br />
 
   <code>sushi cook --sen -u sushiroll.io/**somelongurl**</code>
+
+
+  _Write to Custom Location_ <br />
+
+  <code>sushi cook --sen -u sushiroll.io/**somelongurl** -d Users/nickrodriguez/newProjectFolder

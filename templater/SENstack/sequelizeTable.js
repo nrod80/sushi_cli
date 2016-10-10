@@ -5,7 +5,7 @@ var Sequelize = require('sequelize');
 var db = require('../_db');
 
 module.exports = db.define('{{name}}', {
-{% for field in fields %}
+{% for field in Fields %}
   {{field.name}}: {
     {% if field.type %} type: {{ field.type | Sequelize_Type }}
     {% endif %}

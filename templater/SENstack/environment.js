@@ -6,5 +6,5 @@ module.exports = {
   {% endif %}
   {% if dialect %}
   DIALECT: '{{dialect}}',{% endif %}
-  DB_NAME:'{{DBName}}'
+  DB_NAME:'{{DBname}}'
 };

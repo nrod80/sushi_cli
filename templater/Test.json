@@ -1,47 +1,49 @@
 {
-    "DB": {
-        "def": {
-            "DBname": "newsushi",
-            "port": 5432,
-            "logging": "false",
-            "dialect": "postgres"
+  "DB": {
+    "proj": {
+      "name": "TestName",
+      "description": "This is a test description."
+    },
+    "def": {
+      "DBname": "Dummy",
+      "port": "5432",
+      "logging": "",
+      "dialect": "postres"
+    },
+    "Tables": {
+      "0": {
+        "name": "FirstTable",
+        "Routes": {
+          "get": false,
+          "post": false,
+          "getID": false,
+          "putID": true,
+          "deleteID": true
         },
-        "Tables": [{
-            "name": "Users",
-            "fields": [{
-                "name": "name",
-                "type": "string"
-            },
-            {
-                "name": "age",
-                "type": "integer"
-            }],
-            "Getters": [{
-                "name": "aGetter"
-                }],
-            "Setters": [{
-                "name": "aSetter"
-                }],
-            "Hooks": [{
-                "name": "aHook"
-                }]
-        }, {
-            "name": "Cats",
-            "fields": [{
-                "name": "name",
-                "type": "String"
-            }, {
-                "name": "fluffyness",
-                "type": "Integer"
-            }]
-        }],
-        "Associations": {
-            "Users": {
-                "Cats": "hasMany",
-            },
-            "Cats": {
-                "Users": "belongsTo"
-            }
-        }
+        "Fields": [],
+        "Getters": [],
+        "Setters": [],
+        "Hooks": []
+      },
+      "1": {
+        "name": "SecondTable",
+        "Routes": {
+          "get": false,
+          "post": true,
+          "getID": false,
+          "putID": true,
+          "deleteID": true
+        },
+        "Fields": [],
+        "Getters": [],
+        "Setters": [],
+        "Hooks": []
+      }
+    },
+    "Associations": {
+      "FirstTable": {
+        "HasMany": "SecondTable",
+      }
     }
+  }
 }

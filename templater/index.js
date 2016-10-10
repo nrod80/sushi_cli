@@ -1,6 +1,11 @@
-//import all templates here and export them
-let senstack = require('./SENstack')
+const senstack = require('./SENstack');
+// const data = require('./Test.json');
+module.exports = (data, location) => {
+  const proj = data.DB.proj;
+  const def = data.DB.def;
+  const tables = Object.keys(data.DB.Tables).map(key => data.DB.Tables[key]);
+  const associations = data.DB.Associations;
+  const github = data.DB.github;
 
-module.exports = {
-  senstack: senstack(data, projLocation)
-}
+  senstack(data, proj, def, tables, associations, github, location);
+};

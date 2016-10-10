@@ -1,5 +1,5 @@
 'use strict'
-{% for table in Tables %}
+{% for idx, table in Tables %}
 let {{table.name}} = require('./models/{{table.name}}')
 {% endfor %}
 

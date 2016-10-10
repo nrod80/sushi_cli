@@ -1,90 +1,84 @@
-'use strict'
-const fs = require('fs')
-const nj = require('nunjucks')
-const mkdirp = require('mkdirp')
-const beautify = require('js-beautify').js_beautify
-const path = require('path')
+const fs = require('fs');
+const nj = require('nunjucks');
+const mkdirp = require('mkdirp');
+const beautify = require('js-beautify').js_beautify;
 
-const runRecipe = function(data, projLocation = data.DB.def.name) {
+const njenv = nj.configure(__dirname, {
+  noCache: true,
+  trimBlocks: true,
+});
 
-  const projName = data.projName || 'project';
+njenv.addFilter('Sequelize_Type', str => `Sequelize.${str.toUpperCase()}`);
 
-  //configure nunjucks
-  const njenv = nj.configure(__dirname, {
-    noCache: true,
-    trimBlocks: true
-  })
+function renderAndWrite(template, data, location) {
+  const render = njenv.render(template, data);
+  fs.writeFileSync(location, beautify(render, { indent_size: 2 }));
+}
 
-  //add sequelize filter
-  njenv.addFilter('Sequelize_Type', function(str) {
-    return 'Sequelize.' + str.toUpperCase();
-  })
+function runRecipe(data, proj, def, tables, associations, github, location = './sushi/') {
 
-  //write environment file
-  mkdirp.sync(path.join(projLocation, '/env'), function(err) {
+  const projName = proj.name || 'project';
+
+  // write environment file
+  mkdirp.sync(`${location}${projName}/env`, (err) => {
     if (err) throw err;
     console.log('env directory created');
-  })
+  });
 
-  const envIndex = nj.render('environment.js', data.DB.def);
-
-  const toReturn = beautify(envIndex, { indent_size: 2 })
-  fs.writeFileSync(path.join(projLocation, '/env/index.js'), toReturn)
-
-  //create package.json
-  const packageMade = njenv.render('packageMaker.js', data.github)
-  fs.writeFileSync(path.join(projLocation, '/package.json'), beautify(packageMade, { indent_size: 2 }))
-
-  //write db folder
-  mkdirp.sync(path.join(projLocation, '/db/'), function(err) {
+  // write db folder
+  mkdirp.sync(`${location}${projName}/db/`, (err) => {
     if (err) throw err;
-    console.log('db directory created')
+    console.log('db directory created');
   });
 
-  //write the _db and _db_init files
-  const _db = njenv.render('_db.js', data.DB.def)
-  fs.writeFileSync(path.join(projLocation, '/db/_db.js'), beautify(_db, { indent_size: 2 }))
-
-  const _db_init = njenv.render('_db_init.js', data.DB.def)
-  fs.writeFileSync(path.join(projLocation, '/db/_db_init.js'), beautify(_db_init, { indent_size: 2 }))
-
-  //write models
-  mkdirp.sync(path.join(projLocation, '/db/models/'), function(err) {
+  // write models
+  mkdirp.sync(`${location}${projName}/db/models/`, (err) => {
     if (err) throw err;
-    console.log('models directory created')
+    console.log('models directory created');
   });
 
-  data.DB.Tables.forEach((table) => {
-    const model = njenv.render('sequelizeTable.js', table);
-    fs.writeFileSync(path.join(projLocation, `/db/models/${table.name}.js`), beautify(model, { indent_size: 2 }))
-  })
-
-  const associations = njenv.render('sequelizeIndex.js', data.DB)
-  fs.writeFileSync(path.join(projLocation, `/db/index.js`), beautify(associations, { indent_size: 2 }))
-
-  //create express server
-  mkdirp.sync(path.join(projLocation, '/server'), function(err) {
+  // create express server
+  mkdirp.sync(`${location}${projName}/server`, (err) => {
     if (err) throw err;
-    console.log('server directory created')
+    console.log('server directory created');
   });
 
-  const expressServer = njenv.render('expressServer.js', {})
-  fs.writeFileSync(path.join(projLocation, '/server/app.js'), beautify(expressServer, { indent_size: 2 }))
-
-  //create api routes
-  mkdirp.sync(path.join(projLocation, '/server/routes'), function(err) {
+  // create api routes
+  mkdirp.sync(`${location}${projName}/server/routes`, (err) => {
     if (err) throw err;
-    console.log('routes directory created')
+    console.log('routes directory created');
   });
 
-  const router = njenv.render('expressRouterIndex.js', data.DB)
-  fs.writeFileSync(path.join(projLocation, `/server/routes/index.js`), beautify(router, { indent_size: 2 }))
+  // write the env file
+  renderAndWrite('environment.js', def, `${location}${projName}/env/index.js`);
 
-  data.DB.Tables.forEach((table) => {
-    const router = njenv.render('expressRouter.js', table)
-    fs.writeFileSync(path.join(projLocation, `/server/routes/${table.name}.js`), beautify(router, { indent_size: 2 }))
+  // write the package.json
+  renderAndWrite('packageMaker.js', github, `${location}${projName}/package.json`);
+
+  // write the _db and _db_init files
+  renderAndWrite('_db.js', def, `${location}${projName}/db/_db.js`);
+  renderAndWrite('_db_init.js', def, `${location}${projName}/db/_db_init.js`);
+
+
+  // write the db models
+  tables.forEach((table) => {
+    renderAndWrite('sequelizeTable.js', table, `${location}${projName}/db/models/${table.name}.js`);
+    renderAndWrite('expressRouter.js', table, `${location}${projName}/server/routes/${table.name}.js`);
   });
 
+  const indexInfo = {
+    Associations: associations,
+    Tables: data.DB.Tables,
+  };
+
+  // write the db index.js
+  renderAndWrite('sequelizeIndex.js', indexInfo, `${location}${projName}/db/index.js`);
+
+  // write the app.js
+  renderAndWrite('expressServer.js', {}, `${location}${projName}/server/app.js`);
+
+  // need to figure out what data this uses
+  renderAndWrite('expressRouterIndex.js', data, `${location}${projName}/server/routes/index.js`);
 }
 
 module.exports = runRecipe;

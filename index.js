@@ -9,6 +9,10 @@ let template, data = '', cwd;
 
 function templater(options) {
 
+  if (options.test) {
+    return exec('node templater/tests/senstack', {cwd: __dirname})
+  }
+
   // define template
   if (options.template) {
     template = require(path.join(process.env.PWD, options.template))
@@ -49,7 +53,7 @@ function cookRecipe(template, data, git = false, projLocation = process.env.PWD)
   console.log(chalk.green('your sushi order has been received!'));
   console.log(chalk.blue('step 1: getting your ingredients...'));
   // call the template on the received json
-  template(data, projLocation);
+  template(data, cwd);
   console.log(chalk.blue('step 2: chopping the veggies and cooking the rice... (npm install, create database)'));
   exec('npm install', {cwd: cwd})
   if (git) {
@@ -70,6 +74,7 @@ program
   .option('-t, --template <template_path>')
   .option('-g, --git')
   .option('-d, --directory <directory_path>')
+  .option('-T, --test')
   .option('--sen', 'use the senstack template')
   .description('cook the ingredients into a file system')
   .action(templater);
