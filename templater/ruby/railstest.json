@@ -1,0 +1,70 @@
+{
+  "Associations": {
+    "Tests": {
+      "Users": "belongsTo"
+    },
+    "Users": {
+      "Tests": "hasMany"
+    }
+  },
+  "DBDef": {
+    "dbName": "sushitest",
+    "port": 5432,
+    "logging": false,
+    "dialect": "postgres"
+  },
+  "Tables": {
+    "0": {
+      "tableName": "Users",
+      "routes": {
+        "get": false,
+        "post": false,
+        "getId": false,
+        "putId": true,
+        "deleteId": true
+      },
+      "fields": [{
+        "name": "name",
+        "type": "string"
+      }, {
+        "name": "age",
+        "type": "integer"
+      }],
+      "getters": ["firstGetter"],
+      "setters": ["firstSetter"],
+      "hooks": ["firstHook"]
+    },
+    "1": {
+      "tableName": "Tests",
+      "routes": {
+        "get": true,
+        "post": true,
+        "getId": true,
+        "putId": false,
+        "deleteId": false
+      },
+      "fields": [{
+        "name": "name",
+        "type": "string"
+      }, {
+        "name": "difficulty",
+        "type": "integer"
+      }],
+      "getters": ["getterNum1", "getterTwo"],
+      "setters": ["woohooSetter"],
+      "hooks": ["hookyay"]
+    }
+  },
+  "Project": {
+    "projectName": "TestProject",
+    "projectDesc": "I Am A Sushi Test!!!!!!!!!!"
+  },
+  "FrontEnd": {
+    "loggedIn": true,
+    "currentProjId": null,
+    "tableIdCount": 1,
+    "currTableId": 0,
+    "currView": "editDefine",
+    "tableToDownload": ""
+  }
+}

@@ -1,18 +1,24 @@
 #!/usr/bin/env node
 
 const program = require('commander');
-const exec = require('child_process').execSync;
+const exec = require('child_process').exec;
 const chalk = require('chalk');
 const https = require('https');
 const path = require('path');
-let template, data = '', cwd;
+let template, data = '',
+  cwd, templateToUse;
 
 function templater(options) {
   // define template
   if (options.template) {
     template = require(path.join(process.env.PWD, options.template))
-  } else if (options.sen) { // use default template
+  } else if (options.sen || options.ruby) { // use default template
     template = require('./templater/');
+    if (options.sen) {
+      templateToUse = 'sen'
+    } else {
+      templateToUse = 'ruby'
+    }
   } else {
     return console.log(chalk.red('You must provide a template.'))
   }
@@ -25,40 +31,52 @@ function templater(options) {
     https.get(options.url, function(res) {
       // once data is received...
       res.on('data', function(chunk) {
-        i++;
-        data += chunk.toString();
-      })
-      .on('end', function() {
-        data = JSON.parse(data).definition;
-        cookRecipe(template, data, options.git, options.directory)
-      });
+          i++;
+          data += chunk.toString();
+        })
+        .on('end', function() {
+          data = JSON.parse(data).definition;
+          cookRecipe(template, data, options.git, options.directory, templateToUse)
+        });
     });
   } else if (options.json) { // path to local json
     data = require(path.join(process.env.PWD, options.json))
-    cookRecipe(template, data, options.git, options.directory)
+    cookRecipe(template, data, options.git, options.directory, templateToUse)
   } else {
     console.log(chalk.red('You must provide a json.'))
   }
 };
 
-function cookRecipe(template, data, git = false, projLocation) {
+function cookRecipe(template, data, git = false, projLocation, templateToUse) {
   cwd = projLocation || path.join(process.env.PWD, data.Project.projectName);
 
-  console.log(cwd)
+  if (templateToUse === 'ruby') {
+    let commands = template(data, cwd, templateToUse);
+    console.log(commands)
+    exec('rails new ' + data.Project.projectName)
+    commands.forEach(command => exec(command, {cwd: cwd}))
+    return;
+  }
 
   console.log(chalk.green('your sushi order has been received!'));
   console.log(chalk.blue('step 1: getting your ingredients...'));
   // call the template on the received json
-  template(data, cwd);
+  template(data, cwd, templateToUse);
   console.log(chalk.blue('step 2: chopping the veggies and cooking the rice... (npm install, create database)'));
-  exec('npm install', {cwd: cwd})
+  exec('npm install', {
+    cwd: cwd
+  })
   if (git) {
     console.log(chalk.blue('initializing git repo...'))
-    exec('git init', {cwd: cwd})
+    exec('git init', {
+      cwd: cwd
+    })
   };
   console.log(chalk.blue('step 3: rolling the sushi... (starting server...)'));
   console.log(chalk.green('step 4: enjoy! (server running on port 8080)'));
-  exec('npm start', {cwd: cwd})
+  exec('npm start', {
+    cwd: cwd
+  })
 }
 
 // defaults to json_url (optional req)
@@ -70,6 +88,7 @@ program
   .option('-t, --template <template_path>')
   .option('-g, --git')
   .option('-d, --directory <directory_path>')
+  .option('-r --ruby')
   .option('--sen', 'use the senstack template')
   .description('cook the ingredients into a file system')
   .action(templater);
