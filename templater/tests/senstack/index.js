@@ -4,12 +4,15 @@
 const expect = require('chai').expect;
 const fs = require('fs');
 const path = require('path');
+const exec = require('child_process').spawnSync;
 const senstack = require('../../');
 const json = require('./senstack.test.json');
+const pathToTest = path.join(__dirname, './tests/TestProject');
 
-senstack(json);
 
-const pathToTest = path.join(__dirname, '../../../sushi/testing');
+before(function() {
+  senstack(json, path.join(__dirname, './tests/TestProject'));
+})
 
 describe('The SENstack template', () => {
   it('creates the project directory', () => {
@@ -44,10 +47,10 @@ describe('The SENstack template', () => {
       const envFile = require(path.join(pathToTest, 'env/index.js'));
       const keys = Object.keys(envFile);
       const expectedObj = {
-        DATABASE_URI: 'postgres://localhost:5432/testing',
+        DATABASE_URI: 'postgres://localhost:5432/postgres',
         LOGGING: false,
         DIALECT: 'postgres',
-        DB_NAME: 'testing',
+        DB_NAME: 'sushitest',
       };
       keys.forEach(key => expect(envFile[key]).to.be.equal(expectedObj[key]));
     });
@@ -72,8 +75,6 @@ describe('The SENstack template', () => {
       expect(dbIndexStats.isFile()).to.be.true;
     });
 
-    const db = require(path.join(pathToTest, 'db/index.js'));
-
     it('tables have the proper fields', () => {
       const userModel = require(path.join(pathToTest, 'db/models/Users.js'));
       const userFields = Object.keys(userModel.tableAttributes);
@@ -82,16 +83,13 @@ describe('The SENstack template', () => {
 
       const testModel = require(path.join(pathToTest, 'db/models/Tests.js'));
       const testFields = Object.keys(testModel.tableAttributes);
-      const expectedTestFields = ['name', 'ages'];
       expect(testFields).to.include('name');
       expect(testFields).to.include('difficulty');
     });
 
     it('tables have the proper associations', () => {
-      const userModel = require(path.join(pathToTest, 'db/models/Users.js'));
-      const testModel = require(path.join(pathToTest, 'db/models/Tests.js'));
-
-      // console.dir(userModel, testModel)
+      const userModel = require(path.join(pathToTest, 'db')).model('Users');
+      const testModel = require(path.join(pathToTest, 'db')).model('Tests');
 
       expect(userModel.associations.Tests).to.be.ok;
       expect(userModel.associations.Tests.associationType).to.equal('HasMany');

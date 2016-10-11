@@ -2,44 +2,44 @@
 
 // Express Router:
 const router = require('express').Router(); // eslint-disable-line new-cap
-const {{name}} = require('../../db').model('{{name}}');
+const {{tableName}} = require('../../db').model('{{tableName}}');
 
-{% if Routes.get %}
+{% if routes.get %}
 router.get('/', (req, res, next) => {
- return {{name}}.findAll()
+ return {{tableName}}.findAll()
  .then(data => res.send(data))
  .catch(next)
 })
 
 {% endif %}
-{% if Routes.getID %}
+{% if routes.getId %}
 router.get('/:id', (req, res, next) => {
- return {{name}}.findById(req.params.id)
+ return {{tableName}}.findById(req.params.id)
  .then(data => res.send(data))
  .catch(next)
 })
 
 {% endif %}
-{% if Routes.deleteID %}
+{% if routes.deleteId %}
 router.delete('/:id', (req, res, next) => {
- return {{name}}.findById(req.params.id)
+ return {{tableName}}.findById(req.params.id)
  .then(data => data.delete)
  .then(data => res.send(202))
  .catch(next)
 })
 
 {% endif %}
-{% if Routes.post %}
+{% if routes.post %}
 router.post('/', (req, res, next) => {
- return {{name}}.create(req.body)
+ return {{tableName}}.create(req.body)
  .then(data => res.send(data))
  .catch(next)
 })
 
 {% endif %}
-{% if Routes.putID %}
+{% if routes.putId %}
 router.put('/:id', (req, res, next) => {
- return {{name}}.findById(req.params.id)
+ return {{tableName}}.findById(req.params.id)
  .then(data => data.update(req.body))
  .then(data => res.send(data))
    .catch(next)

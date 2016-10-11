@@ -1,5 +1,5 @@
 {
-  "name": "{{projectname}}",
+  "name": "{{projectName}}",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -8,7 +8,6 @@
     "db-init": "node ./db/_db_init.js",
     "postinstall": "npm run db-init"
   },
-  "author": "{{username}}",
   "license": "ISC",
   "dependencies": {
     "express": "^4.13.3",

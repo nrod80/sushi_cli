@@ -1,64 +1,70 @@
 {
-  "DB": {
-    "proj": {
-      "name": "testing",
-      "description": "This is a test description."
+  "Associations": {
+    "Tests": {
+      "Users": "belongsTo"
     },
-    "def": {
-      "DBname": "testing",
-      "port": "5432",
-      "logging": "",
-      "dialect": "postgres"
-    },
-    "Tables": {
-      "0": {
-        "name": "Users",
-        "Routes": {
-          "get": false,
-          "post": false,
-          "getID": false,
-          "putID": true,
-          "deleteID": true
-        },
-        "Fields": [{
-          "name": "name",
-          "type": "string"
-        }, {
-          "name": "age",
-          "type": "integer"
-        }],
-        "Getters": [],
-        "Setters": [],
-        "Hooks": []
-      },
-      "1": {
-        "name": "Tests",
-        "Routes": {
-          "get": true,
-          "post": true,
-          "getID": true,
-          "putID": false,
-          "deleteID": false
-        },
-        "Fields": [{
-          "name": "name",
-          "type": "string"
-        }, {
-          "name": "difficulty",
-          "type": "integer"
-        }],
-        "Getters": [],
-        "Setters": [],
-        "Hooks": []
-      }
-    },
-    "Associations": {
-      "Users": {
-        "Tests": "hasMany"
-      },
-      "Tests": {
-        "Users": "belongsTo"
-      }
+    "Users": {
+      "Tests": "hasMany"
     }
+  },
+  "DBDef": {
+    "dbName": "sushitest",
+    "port": 5432,
+    "logging": false,
+    "dialect": "postgres"
+  },
+  "Tables": {
+    "0": {
+      "tableName": "Users",
+      "routes": {
+        "get": false,
+        "post": false,
+        "getId": false,
+        "putId": true,
+        "deleteId": true
+      },
+      "fields": [{
+        "name": "name",
+        "type": "string"
+      }, {
+        "name": "age",
+        "type": "integer"
+      }],
+      "getters": ["firstGetter"],
+      "setters": ["firstSetter"],
+      "hooks": ["firstHook"]
+    },
+    "1": {
+      "tableName": "Tests",
+      "routes": {
+        "get": true,
+        "post": true,
+        "getId": true,
+        "putId": false,
+        "deleteId": false
+      },
+      "fields": [{
+        "name": "name",
+        "type": "string"
+      }, {
+        "name": "difficulty",
+        "type": "integer"
+      }],
+      "getters": ["getterNum1", "getterTwo"],
+      "setters": ["woohooSetter"],
+      "hooks": ["hookyay"]
+    }
+  },
+  "Project": {
+    "projectName": "TestProject",
+    "projectDesc": "I Am A Sushi Test!!!!!!!!!!"
+  },
+  "FrontEnd": {
+    "loggedIn": true,
+    "currentProjId": null,
+    "tableIdCount": 1,
+    "currTableId": 0,
+    "currView": "editDefine",
+    "tableToDownload": ""
   }
 }

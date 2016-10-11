@@ -2,7 +2,7 @@
 var router = require('express').Router(); // eslint-disable-line new-cap
 
 {% for table in Tables %}
-router.use('/{{table.name}}', require('./{{table.name}}'));
+router.use('/{{table.tableName}}', require('./{{table.tableName}}'));
 {% endfor %}
 
 router.use(function (req, res) {

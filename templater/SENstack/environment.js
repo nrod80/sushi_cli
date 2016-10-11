@@ -1,10 +1,10 @@
 'use strict'
 module.exports = {
-  DATABASE_URI: '{{dialect}}://localhost:{{port}}/{{DBname}}',
+  DATABASE_URI: 'postgres://localhost:{{port}}/{{dialect}}',
   {% if logging %}
   LOGGING: {{logging}},
   {% endif %}
   {% if dialect %}
   DIALECT: '{{dialect}}',{% endif %}
-  DB_NAME:'{{DBname}}'
+  DB_NAME:'{{dbName}}'
 };

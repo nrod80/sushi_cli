@@ -12,16 +12,14 @@ function templater(options) {
   if (options.test) {
     return exec('node templater/tests/senstack', {cwd: __dirname})
   }
-
   // define template
   if (options.template) {
     template = require(path.join(process.env.PWD, options.template))
   } else if (options.sen) { // use default template
-    template = require('./templater/SENstack');
+    template = require('./templater/');
   } else {
     return console.log(chalk.red('You must provide a template.'))
   }
-  let i = 0;
 
   // get the data
   if (options.url) {
@@ -47,8 +45,10 @@ function templater(options) {
   }
 };
 
-function cookRecipe(template, data, git = false, projLocation = process.env.PWD) {
-  cwd = projLocation || path.join(process.env.PWD, data.DB.def.DBname);
+function cookRecipe(template, data, git = false, projLocation) {
+  cwd = projLocation || path.join(process.env.PWD, data.Project.projectName);
+
+  console.log(cwd)
 
   console.log(chalk.green('your sushi order has been received!'));
   console.log(chalk.blue('step 1: getting your ingredients...'));
@@ -74,7 +74,6 @@ program
   .option('-t, --template <template_path>')
   .option('-g, --git')
   .option('-d, --directory <directory_path>')
-  .option('-T, --test')
   .option('--sen', 'use the senstack template')
   .description('cook the ingredients into a file system')
   .action(templater);
