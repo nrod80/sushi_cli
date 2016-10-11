@@ -8,10 +8,6 @@ const path = require('path');
 let template, data = '', cwd;
 
 function templater(options) {
-
-  if (options.test) {
-    return exec('node templater/tests/senstack', {cwd: __dirname})
-  }
   // define template
   if (options.template) {
     template = require(path.join(process.env.PWD, options.template))
@@ -61,7 +57,7 @@ function cookRecipe(template, data, git = false, projLocation) {
     exec('git init', {cwd: cwd})
   };
   console.log(chalk.blue('step 3: rolling the sushi... (starting server...)'));
-  console.log(chalk.green('step 4: enjoy! (server running on port 3000)'));
+  console.log(chalk.green('step 4: enjoy! (server running on port 8080)'));
   exec('npm start', {cwd: cwd})
 }
 

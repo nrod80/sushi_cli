@@ -36,8 +36,8 @@ app.use(function(err, req, res, next) {
   res.status(err.status || 500).send(err.message || 'Internal server error.');
 });
 
-// listen on port 3000
-var port = 3000;
+// listen on port 8080
+var port = 8080;
 app.listen(port, function () {
   console.log('The server is anxiously awaiting you on port', port);
   db.sync()
