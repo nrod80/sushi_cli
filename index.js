@@ -49,40 +49,44 @@ function templater(options) {
 
 function cookRecipe(template, data, git = false, projLocation, templateToUse) {
   cwd = projLocation || path.join(process.env.PWD, data.Project.projectName);
+  console.log(chalk.green('your sushi order has been received!'));
 
   if (templateToUse === 'ruby') {
     let commands = template(data, cwd, templateToUse);
-    console.log(commands)
     exec('rails new ' + data.Project.projectName)
-    commands.forEach(command => exec(command, {cwd: cwd}))
+    commands.forEach(command => exec(command, {
+      cwd: cwd
+    }))
     return;
-  }
-
-  console.log(chalk.green('your sushi order has been received!'));
-  console.log(chalk.blue('step 1: getting your ingredients...'));
-  // call the template on the received json
-  template(data, cwd, templateToUse);
-  console.log(chalk.blue('step 2: chopping the veggies and cooking the rice... (npm install, create database)'));
-  exec('npm install', {
-    cwd: cwd
-  })
-  if (git) {
-    console.log(chalk.blue('initializing git repo...'))
-    exec('git init', {
+  } else if (templateToUse === 'sen') {
+    console.log(chalk.blue('step 1: getting your ingredients...'));
+    // call the template on the received json
+    template(data, cwd, templateToUse);
+    console.log(chalk.blue('step 2: chopping the veggies and cooking the rice... (npm install, create database)'));
+    exec('npm install', {
       cwd: cwd
     })
-  };
-  console.log(chalk.blue('step 3: rolling the sushi... (starting server...)'));
-  console.log(chalk.green('step 4: enjoy! (server running on port 8080)'));
-  exec('npm start', {
-    cwd: cwd
-  })
+    if (git) {
+      console.log(chalk.blue('initializing git repo...'))
+      exec('git init', {
+        cwd: cwd
+      })
+    };
+    console.log(chalk.blue('step 3: rolling the sushi... (starting server...)'));
+    console.log(chalk.green('step 4: enjoy! (server running on port 8080)'));
+    exec('npm start', {
+      cwd: cwd
+    })
+  }
+  else {
+    return template(data);
+  }
 }
 
 // defaults to json_url (optional req)
 program
   .version('0.0.1')
-  .command('cook')
+  .command('roll')
   .option('-u, --url <json_url>')
   .option('-j, --json <json_path>')
   .option('-t, --template <template_path>')
@@ -90,7 +94,7 @@ program
   .option('-d, --directory <directory_path>')
   .option('-r --ruby')
   .option('--sen', 'use the senstack template')
-  .description('cook the ingredients into a file system')
+  .description('roll the ingredients into a file system')
   .action(templater);
 
 program.parse(process.argv);

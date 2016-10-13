@@ -1,6 +1,6 @@
 {
   "name": "sushi_cli",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "A Command Line Interface for Sushi",
   "main": "index.js",
   "scripts": {},
@@ -8,8 +8,12 @@
     "sushi": "index.js"
   },
   "keywords": [
-    "Sushi",
-    "Cat"
+    "sushiroll",
+    "sushi",
+    "cat",
+    "boilerplate",
+    "generator",
+    "database"
   ],
   "author": "Nick Rodriguez",
   "license": "ISC",
