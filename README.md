@@ -48,11 +48,11 @@ Super Basic: <br />
   - I want to create the file right in my working directory in the terminal.<br />
   <code>sushi cook --sen -u sushiroll.io/**somelongurl**</code><br />
 
-Write Folder to Custom Location <br />
+Write Folder to Custom Location: <br />
   - <code>sushi cook --sen -u sushiroll.io/**somelongurl** -d Users/nickrodriguez/newProjectFolder</code><br />
 
-Use a Custom Template <br />
+Use a Custom Template: <br />
   - <code>sushi cook -t Users/nickrodriguez/templates/[*directory containing your index.js*] -u sushiroll.io/**somelongurl**</code><br />
 
-Use a Local JSON <br />
+Use a Local JSON: <br />
   - <code>sushi cook -j Users/nickrodriguez/jsons/[*your JSON file*] -r</code><br />
