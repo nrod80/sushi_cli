@@ -102,5 +102,5 @@
 
 <strong>BUT WAIT HOW DO I ACTUALLY HOOK IT UP TO RECEIVE THE JSON???</strong>
 
-<p>Well, you could always just find a way to feed the JSON manually to your index.js, but if you use the <code>-t [path to your template]</code> flag in the command line interface and also point us to the JSON you want to use (whether that be a filepath or a url), we'll take care of that for you.</p>
+<p>Well, you could always just find a way to feed the JSON manually to your index.js, but if you use the <code>-t [path to your template]</code> flag in the command line interface and also point us to the JSON you want to use (whether that be a filepath or a url), we'll take care of that for you. For an example of this option in use, checkout our <a href="github.com/nrod80/sushi_cli">readme</a></p>
 
