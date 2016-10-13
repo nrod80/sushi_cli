@@ -42,17 +42,17 @@ Once installed, you can use the phrase <code>sushi cook</code>, with any of the 
 
 <strong>Examples:</strong><br />
 
-  _Super Basic:_ <br />
+Super Basic: <br />
   - I just used Sushi's webapp to create the agnostic JSON scaffolding for my database, it's accessible at: sushiroll.io/**somelongurl**. <br />
   - I want to use the included Sequelize, Express, Node template to cook my sushi.<br />
   - I want to create the file right in my working directory in the terminal.<br />
   <code>sushi cook --sen -u sushiroll.io/**somelongurl**</code><br />
 
-  _Write Folder to Custom Location_ <br />
+Write Folder to Custom Location <br />
   - <code>sushi cook --sen -u sushiroll.io/**somelongurl** -d Users/nickrodriguez/newProjectFolder</code><br />
 
-  _Use a Custom Template_ <br />
+Use a Custom Template <br />
   - <code>sushi cook -t Users/nickrodriguez/templates/[*directory containing your index.js*] -u sushiroll.io/**somelongurl**</code><br />
 
-  _Use a Local JSON_ <br />
+Use a Local JSON <br />
   - <code>sushi cook -j Users/nickrodriguez/jsons/[*your JSON file*] -r</code><br />
