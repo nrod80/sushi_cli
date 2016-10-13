@@ -3,7 +3,7 @@
 <h2><strong>Welcome to SushiRoll's CLI!</strong></h2>
 
 <strong>This interface will allow you to use templates to create functional code from <a href="https://github.com/Abazhenov/Sushi">sushiroll.io's</a> agnostic JSONs. You can:</strong>
-- write your own templates (or use ours),
+- <a href="https://github.com/nrod80/sushi_cli/blob/master/template_guide.md"> write your own templates</a> (or use ours),
 - use local JSONs (or use one created on our webapp),
 - specify the desired location of the output,
 - choose to initialize the folder with a .git,
