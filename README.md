@@ -49,10 +49,10 @@ Once installed, you can use the phrase <code>sushi cook</code>, with any of the 
   <code>sushi cook --sen -u sushiroll.io/**somelongurl**</code><br />
 
   _Write Folder to Custom Location_ <br />
-  - <code>sushi cook --sen -u sushiroll.io/**somelongurl** -d Users/nickrodriguez/newProjectFolder<br />
+  - <code>sushi cook --sen -u sushiroll.io/**somelongurl** -d Users/nickrodriguez/newProjectFolder</code><br />
 
   _Use a Custom Template_ <br />
-  <code>sushi cook -t Users/nickrodriguez/templates/[*directory containing your index.js*] -u sushiroll.io/**somelongurl**<br />
+  - <code>sushi cook -t Users/nickrodriguez/templates/[*directory containing your index.js*] -u sushiroll.io/**somelongurl**</code><br />
 
   _Use a Local JSON_ <br />
-  <code>sushi cook -j Users/nickrodriguez/jsons/[*your JSON file*] -r<br />
+  - <code>sushi cook -j Users/nickrodriguez/jsons/[*your JSON file*] -r</code><br />
