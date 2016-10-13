@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 const program = require('commander');
-const exec = require('child_process').exec;
+const exec = require('child_process').execSync;
 const chalk = require('chalk');
 const https = require('https');
 const path = require('path');
@@ -31,7 +31,6 @@ function templater(options) {
     https.get(options.url, function(res) {
       // once data is received...
       res.on('data', function(chunk) {
-          i++;
           data += chunk.toString();
         })
         .on('end', function() {
@@ -48,7 +47,7 @@ function templater(options) {
 };
 
 function cookRecipe(template, data, git = false, projLocation, templateToUse) {
-  cwd = projLocation || path.join(process.env.PWD, data.Project.projectName);
+  cwd = projLocation || path.join(process.env.PWD, (data.Project.projectName || 'sushiroll'));
   console.log(chalk.green('your sushi order has been received!'));
 
   if (templateToUse === 'ruby') {
