@@ -54,7 +54,7 @@ function cookRecipe(template, data, git = false, projLocation, templateToUse) {
   if (templateToUse === 'ruby') {
     let commands = template(data, cwd, templateToUse);
     exec('rails new ' + (data.Project.projectName || 'sushiroll'), { cwd: process.env.CWD })
-    commands.forEach(command => execSync(command, {
+    commands.forEach(command => exec(command, {
       cwd: cwd
     }))
     return;
