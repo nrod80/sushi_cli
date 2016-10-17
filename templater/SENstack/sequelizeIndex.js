@@ -10,6 +10,7 @@ module.exports = db;
 
 {% for source, name in Associations %}
 {% for  target, association in name %}
-{{source}}.{{association}}({{target}})
+{{source}}.{{AssociationMap[association][0]}}({{target}})
+{{target}}.{{AssociationMap[association][1]}}({{source}}{% if AssociationMap[association][2] %}, { through: '{{source}}{{target}}'}{% endif %})
 {% endfor %}
 {% endfor %}

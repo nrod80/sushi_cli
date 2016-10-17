@@ -68,6 +68,12 @@ function runRecipe(data, proj, def, tables, associations, cwd) {
 
   const indexInfo = {
     Associations: associations,
+    AssociationMap: {
+      'one-to-one': ['hasOne', 'belongsTo', false],
+      'one-to-many': ['hasMany', 'belongsTo', false],
+      'many-to-one': ['hasOne', 'belongsToMany', true],
+      'many-to-many': ['hasMany', 'belongsToMany', true]
+    },
     Tables: Object.keys(tables).map(table => tables[table]),
   };
 
