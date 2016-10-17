@@ -6,22 +6,21 @@ const exec = require('child_process').exec;
 const chalk = require('chalk');
 const https = require('https');
 const path = require('path');
-let template, data = '',
-  cwd, templateToUse;
+const template = require('./templater/')
+let data = '', cwd, templateToUse;
 
 function templater(options) {
   // define template
   if (options.template) {
-    template = require(path.join(process.env.PWD, options.template))
+    templateToUse = path.join(process.env.PWD, options.template);
   } else if (options.sen || options.ruby) { // use default template
-    template = require('./templater/');
     if (options.sen) {
-      templateToUse = 'sen'
+      templateToUse = 'sen';
     } else {
-      templateToUse = 'ruby'
+      templateToUse = 'ruby';
     }
   } else {
-    return console.log(chalk.red('You must provide a template.'))
+    return console.log(chalk.red('You must provide a template.'));
   }
 
   // get the data
@@ -36,14 +35,14 @@ function templater(options) {
         })
         .on('end', function() {
           data = JSON.parse(data).definition;
-          cookRecipe(template, data, options.git, options.directory, templateToUse)
+          cookRecipe(template, data, options.git, options.directory, templateToUse);
         });
     });
   } else if (options.json) { // path to local json
-    data = require(path.join(process.env.PWD, options.json))
-    cookRecipe(template, data, options.git, options.directory, templateToUse)
+    data = require(path.join(process.env.PWD, options.json));
+    cookRecipe(template, data, options.git, options.directory, templateToUse);
   } else {
-    console.log(chalk.red('You must provide a json.'))
+    console.log(chalk.red('You must provide a json.'));
   }
 };
 
@@ -79,7 +78,7 @@ function cookRecipe(template, data, git = false, projLocation, templateToUse) {
     })
   }
   else {
-    return template(data);
+    return require('./templater')(data, cwd, templateToUse);
   }
 }
 

@@ -13,7 +13,7 @@
 <p>Ideally, once the template has produced it's output, the only steps necessary to getting a fully functional server/database is npm-installing, then npm-starting.<p>
 
 
-<strong>Your index.js should export a function which takes the JSON as a parameter. The important parts of the JSON are:</strong>
+<strong>Your index.js should export a function which takes the follow six portions of the JSON as parameters:</strong>
 
 <pre>
 "Project" = {
@@ -93,7 +93,7 @@
 
 "Assocations" = {
   "Sales": {
-    "Sushi": "hasMany"
+    "Sushi": "one-to-many"
   }
 }
 </pre>
