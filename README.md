@@ -3,7 +3,7 @@
 <h2><strong>Welcome to SushiRoll's CLI!</strong></h2>
 
 <strong>This interface will allow you to use templates to create functional code from <a href="https://github.com/Abazhenov/Sushi">sushiroll.io's</a> agnostic JSONs. You can:</strong>
-- write your own templates (or use ours),
+- <a href="https://github.com/nrod80/sushi_cli/blob/master/template_guide.md"> write your own templates</a> (or use ours),
 - use local JSONs (or use one created on our webapp),
 - specify the desired location of the output,
 - choose to initialize the folder with a .git,
@@ -42,17 +42,17 @@ Once installed, you can use the phrase <code>sushi roll</code>, with any of the 
 
 <strong>Examples:</strong><br />
 
-  _Super Basic:_ <br />
+Super Basic: <br />
   - I just used Sushi's webapp to create the agnostic JSON scaffolding for my database, it's accessible at: sushiroll.io/**somelongurl**. <br />
   - I want to use the included Sequelize, Express, Node template to roll my sushi.<br />
   - I want to create the file right in my working directory in the terminal.<br />
   <code>sushi roll --sen -u sushiroll.io/**somelongurl**</code><br />
 
   _Write Folder to Custom Location_ <br />
-  - <code>sushi roll --sen -u sushiroll.io/**somelongurl** -d Users/nickrodriguez/newProjectFolder<br />
+  - <code>sushi roll --sen -u sushiroll.io/**somelongurl** -d Users/nickrodriguez/newProjectFolder</code><br />
 
   _Use a Custom Template_ <br />
-  <code>sushi roll -t Users/nickrodriguez/templates/[*directory containing your index.js*] -u sushiroll.io/**somelongurl**<br />
+  <code>sushi roll -t Users/nickrodriguez/templates/[*directory containing your index.js*] -u sushiroll.io/**somelongurl**</code><br />
 
   _Use a Local JSON_ <br />
-  <code>sushi roll -j Users/nickrodriguez/jsons/[*your JSON file*] -r<br />
+  <code>sushi roll -j Users/nickrodriguez/jsons/[*your JSON file*] -r</code><br />
