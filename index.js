@@ -1,7 +1,8 @@
 #!/usr/bin/env node
 
 const program = require('commander');
-const exec = require('child_process').execSync;
+const execSync = require('child_process').execSync;
+const exec = require('child_process').exec;
 const chalk = require('chalk');
 const https = require('https');
 const path = require('path');
@@ -52,8 +53,8 @@ function cookRecipe(template, data, git = false, projLocation, templateToUse) {
 
   if (templateToUse === 'ruby') {
     let commands = template(data, cwd, templateToUse);
-    exec('rails new ' + data.Project.projectName)
-    commands.forEach(command => exec(command, {
+    exec('rails new ' + (data.Project.projectName || 'sushiroll'), { cwd: process.env.CWD })
+    commands.forEach(command => execSync(command, {
       cwd: cwd
     }))
     return;
@@ -62,18 +63,18 @@ function cookRecipe(template, data, git = false, projLocation, templateToUse) {
     // call the template on the received json
     template(data, cwd, templateToUse);
     console.log(chalk.blue('step 2: chopping the veggies and cooking the rice... (npm install, create database)'));
-    exec('npm install', {
+    execSync('npm install', {
       cwd: cwd
     })
     if (git) {
       console.log(chalk.blue('initializing git repo...'))
-      exec('git init', {
+      execSync('git init', {
         cwd: cwd
       })
     };
     console.log(chalk.blue('step 3: rolling the sushi... (starting server...)'));
     console.log(chalk.green('step 4: enjoy! (server running on port 8080)'));
-    exec('npm start', {
+    execSync('npm start', {
       cwd: cwd
     })
   }

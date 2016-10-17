@@ -14,11 +14,6 @@ module.exports = (data, proj, def, tables, associations, cwd) => {
 
   let projname = cwd;
 
-  let env = {
-    tables: tableArr,
-    HOME: process.env.HOME,
-    projname
-  }
   tableArr.forEach(arr => {arr.unshift('rails generate scaffold'); returnArr.push(arr.join(' '));})
   returnArr.push('rake db:migrate');
 
